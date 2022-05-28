@@ -1,0 +1,16 @@
+<div class="row">
+  <aside class="col-sm-4">
+    サイドバー
+  </aside>
+  <main class="col-sm-8">
+    <div class="mb-3 text-end">
+      <%= link_to "新しいユーザを登録する", signup_path, class: "btn btn-primary" %>
+    </div>
+    
+    <div>
+      <h4 class="border-bottom border-dark border-2 mb-3">教員一覧</h4>
+  
+      <%= render "users", users: @users %>
+    </div>
+  </main>
+</div>

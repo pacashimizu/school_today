@@ -1,0 +1,45 @@
+    <%= form_with(model: user) do |f| %>
+      <%= render "layouts/error_messages", model: f.object %>
+      
+      <div class="mb-3">
+        <div class="form-check form-switch">
+        <%= f.label :teacher, "教員権限", class: "form-check-label" %>
+        <%= f.check_box :teacher, { class: "form-check-input" }, "true", "false" %>
+        </div>
+      </div>
+      
+      <div class="mb-3">
+        <div>クラス</div>
+        <% @grades.each do |grade| %>
+          <%= f.radio_button :grade_id, grade[:id], class: "btn-check", autocomplete: "off" %>
+          <%= f.label :grade_id, grade.name, value: grade[:id], class: "btn btn-outline-primary" %>
+        <% end %>
+      </div>
+    
+      <div class="mb-3">
+        <%= f.label :name, "氏名" %>
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+      
+      <div class="mb-3">
+        <%= f.label :login_id, "ログインID" %>
+        <%= f.text_field :login_id, class: "form-control" %>
+      </div>
+      
+      <div class="mb-3">
+        <%= f.label :password, "パスワード" %>
+        <%= f.password_field :password, class: "form-control" %>
+      </div>
+      
+      <div class="mb-3">
+        <%= f.label :password_confirmation, "パスワード（確認用再入力）" %>
+        <%= f.password_field :password_confirmation, class: "form-control" %>
+      </div>
+      
+      <div class="mb-3">
+        <%= f.label :comment, "コメント" %><span class="badge bg-warning text-dark">教員のみ</span>
+        <%= f.text_area :comment, class: "form-control", rows: 3 %>
+      </div>
+      
+      <%= f.submit "ユーザを登録する", class: "btn btn-primary w-100" %>
+    <% end %>
