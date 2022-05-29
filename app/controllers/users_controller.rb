@@ -28,7 +28,7 @@ class UsersController < ApplicationController
 
   def update
 
-    if @user.update
+    if @user.update(user_params)
       flash[:success] = "ユーザを更新しました。"
       redirect_to users_url
     else
@@ -59,7 +59,7 @@ class UsersController < ApplicationController
   end
   
   def user_params
-    params.require(:user).permit(:name, :login_id, :password, :password_confirmation, :grade_id, :teacher, :image)
+    params.require(:user).permit(:name, :login_id, :password, :password_confirmation, :comment, :teacher, :grade_id, :image, :remove_image)
   end
 
 end

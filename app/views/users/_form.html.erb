@@ -41,5 +41,19 @@
         <%= f.text_area :comment, class: "form-control", rows: 3 %>
       </div>
       
+      <div class="mb-3">
+        <%= f.label :image, "顔写真" %>
+        <%= f.file_field :image, class: "form-control" %>
+        <%= image_tag user.image.url if user.image? %>
+      
+      <div class="form-check">  
+        <% if user.image? %>
+          <%= f.check_box :remove_image, class: "form-check-input" %>
+          <%= f.label :remove_image, "画像を削除する", class: "form-check-label" %>
+        <% end %>
+      </div>
+        
+      </div>
+      
       <%= f.submit "ユーザを登録する", class: "btn btn-primary w-100" %>
     <% end %>

@@ -3,7 +3,9 @@
         <div class="card mb-1" style="max-widh: 540px;">
           <div class="row g-0">
             <div class="col-4">
-              <img src="" alt="">
+              <% if user.image? %>
+                <%= image_tag user.image.url, size: "100x100", class: "card-img" %>
+              <% end %>
             </div>
             <div class="col-8">
               <div class="card-body d-flex">
