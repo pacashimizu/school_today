@@ -46,12 +46,12 @@
         <%= f.file_field :image, class: "form-control" %>
         <%= image_tag user.image.url if user.image? %>
       
-      <div class="form-check">  
-        <% if user.image? %>
-          <%= f.check_box :remove_image, class: "form-check-input" %>
-          <%= f.label :remove_image, "画像を削除する", class: "form-check-label" %>
-        <% end %>
-      </div>
+        <div class="form-check">  
+          <% if user.image? %>
+            <%= f.check_box :remove_image, class: "form-check-input" %>
+            <%= f.label :remove_image, "画像を削除する", class: "form-check-label" %>
+          <% end %>
+        </div>
         
       </div>
       

@@ -1,5 +1,5 @@
 <header class="mb-4">
-  <nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="/">桜ヶ丘こども園 Dayily News</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="MENU">
@@ -7,9 +7,25 @@
       </button>
       
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item"><a href="/users/teachers" class="nav-link">教員一覧</a></li>
-        </ul>
+        <% if logged_in? %>
+          <% if current_user.teacher? %>
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item"><a href="/" class="nav-link <%= "active" if current_page?(root_path) %>">News</a></li>
+              <li class="nav-item"><a href="/users" class="nav-link <%= "active" if current_page?(users_path) %>">園児一覧</a></li>
+              <li class="nav-item"><a href="/users/teachers" class="nav-link  <%= "active" if current_page?(teachers_users_path) %>">教員一覧</a></li>
+              <li class="nav-item"><a href="#" class="nav-link">クラス一覧</a></li>
+            </ul>
+            <%= link_to "ログアウト", logout_path, method: :delete, class: "btn btn-outline-light btn-sm" %>
+
+          <% else %>
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item"><a href="/" class="nav-link">News</a></li>
+              <li class="nav-item"><a href="/users/teachers" class="nav-link">教員一覧</a></li>
+            </ul>
+            <%= link_to "ログアウト", logout_path, method: :delete, class: "btn btn-outline-light btn-sm" %>
+          <% end %>
+        <% end %>  
+        
       </div>
     </div>
   </nav>
