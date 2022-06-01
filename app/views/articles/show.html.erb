@@ -1,0 +1,41 @@
+<div class="row p-3">
+  <div class="d-flex gap-1">
+    <% if current_user.teacher? %>
+      <%= link_to "この記事を編集する", edit_article_path, class: "btn btn-outline-secondary" %>
+      <%= link_to "この記事を削除する", @article, method: :delete, data: { confirm: "記事を削除してよいですか？" }, class: "btn btn-danger" %>
+    <% end %>
+  </div>
+
+  <div class="col-md-5">
+    <h4>写真入れる</h4>
+<%
+=begin %>
+      <% if article.image? %>
+        <%= image_tag article.image.url, size: "100x100", class: "card-img" %>
+      <% end %>
+<%
+=end %>
+  </div>
+  <div class="col-md-7">
+    <p><span class="badge bg-warning text-dark rounded-pill"><%= @article.grade.name %></span></p>
+    <h4><%= @article.title %></h4>
+    <p><small><%= @article.created_at.strftime("%Y-%m-%d %H:%M") %></small></p>
+    <p><%= @article.content %></p>
+    
+    <div class="container bg-light py-3">
+      <div class="row">
+        <div class="col-4">
+          <% if @article.user.image? %>
+            <%= image_tag @article.user.image.url, class: "img-thumbnail" %>
+          <% end %>
+        </div>
+        <div class="col-8">
+          <h6><%= @article.user.name %></h6>
+          <p><%= @article.user.comment %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+</div>

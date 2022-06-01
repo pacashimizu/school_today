@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   belongs_to :grade
-  
+
   mount_uploader :image, UserimageUploader
   
   validates :name, presence: true, length: { maximum: 50 }
@@ -8,4 +8,6 @@ class User < ApplicationRecord
   validates :teacher, inclusion: { in: [true, false] }
   
   has_secure_password
+  
+  has_many :articles
 end

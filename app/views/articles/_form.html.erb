@@ -1,0 +1,41 @@
+<%= form_with(model: article) do |f| %>
+  <%= render "layouts/error_messages", model: f.object %>
+
+  <div class="mb-3">
+    <div>クラス</div>
+    <% grades.each do |grade| %>
+      <%= f.radio_button :grade_id, grade[:id], class: "btn-check", autocomplete: "off" %>
+      <%= f.label :grade_id, grade.name, value: grade[:id], class: "btn btn-outline-primary" %>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :title, "タイトル" %>
+    <%= f.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :content, "本文" %>
+    <%= f.text_area :content, class: "form-control", rows: 3 %>
+  </div>
+
+<%
+=begin  %>
+<div class="mb-3">
+    <%= f.label :image, "写真" %>
+    <%= f.file_field :image, class: "form-control" %>
+    <%= image_tag user.image.url if user.image? %>
+  
+    <div class="form-check">  
+      <% if user.image? %>
+        <%= f.check_box :remove_image, class: "form-check-input" %>
+        <%= f.label :remove_image, "画像を削除する", class: "form-check-label" %>
+      <% end %>
+    </div>
+    
+  </div>
+<%
+=end %>
+  
+  <%= f.submit "記事を投稿する", class: "btn btn-primary w-100" %>
+<% end %>

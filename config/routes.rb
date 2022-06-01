@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   
   get "signup", to: "users#new"
   
+  resources :articles
   resources :grades, only: [:index]
   resources :users, only: [:index, :create, :edit, :update, :destroy] do
     collection do

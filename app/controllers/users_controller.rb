@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :require_user_logged_in
   before_action :user_teacher, only: [:index, :new, :create, :edit, :update, :destroy]
-  before_action :set_grades, only: [:new, :create, :edit]
+  before_action :set_grades, only: [:new, :edit]
   before_action :set_user, only: [:edit, :update, :destroy]
   
   def index

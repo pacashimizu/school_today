@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_26_055142) do
+ActiveRecord::Schema.define(version: 2022_06_01_053448) do
+
+  create_table "articles", charset: "utf8mb4", force: :cascade do |t|
+    t.string "title"
+    t.string "content"
+    t.bigint "user_id", null: false
+    t.bigint "grade_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["grade_id"], name: "index_articles_on_grade_id"
+    t.index ["user_id"], name: "index_articles_on_user_id"
+  end
 
   create_table "grades", charset: "utf8mb4", force: :cascade do |t|
     t.string "name"
@@ -31,5 +42,7 @@ ActiveRecord::Schema.define(version: 2022_05_26_055142) do
     t.index ["grade_id"], name: "index_users_on_grade_id"
   end
 
+  add_foreign_key "articles", "grades"
+  add_foreign_key "articles", "users"
   add_foreign_key "users", "grades"
 end
