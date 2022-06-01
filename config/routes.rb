@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   delete "logout", to: "sessions#destroy"
   
   get "signup", to: "users#new"
+  
+  resources :grades, only: [:index]
   resources :users, only: [:index, :create, :edit, :update, :destroy] do
     collection do
       get :teachers

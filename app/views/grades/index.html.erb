@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="col-md-8 offset-md-2">
+    <h4 class="border-bottom border-dark border-2 mb-3">クラス一覧</h4>
+    
+    <table class="table table-striped text-center mb-3">
+      <thead class="table-dark">
+        <tr>
+          <th>並び順</th>
+          <th>クラス名</th>
+          <th>園児数</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @grades.each do |grade| %>
+         <tr>
+           <td><%= grade.id %></td>
+           <td><%= grade.name %></td>
+           <td><%= grade.users.where(teacher: false).count %></td>
+         </tr>
+        <% end %>
+      </tbody>
+    </table>
+    
+    <%= link_to "進級処理", 
