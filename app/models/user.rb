@@ -10,4 +10,12 @@ class User < ApplicationRecord
   has_secure_password
   
   has_many :articles
+  
+  def self.search_by_name(name)
+    where(["name LIKE?", "%#{name}%"])
+  end
+  
+  def self.search_by_grade(grade_ids)
+      where(grade_id: grade_ids)
+  end
 end

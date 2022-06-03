@@ -7,11 +7,16 @@ Rails.application.routes.draw do
   
   get "signup", to: "users#new"
   
-  resources :articles
+  resources :articles do
+    collection do
+      get :search
+    end
+  end
   resources :grades, only: [:index]
   resources :users, only: [:index, :create, :edit, :update, :destroy] do
     collection do
       get :teachers
+      get :search
     end
   end
 

@@ -1,16 +1,42 @@
 <div class="row">
-  <aside class="col-sm-4">
+  <aside class="col-md-4 py-4">
     <% if current_user.teacher? %>
       <div class="mb-3">
         <%= link_to "新しい記事を書く", new_article_path, class: "btn btn-primary" %>
       </div>
     <% end %>
+    
+    <div class="mb-3">
+      <%= form_with(url: search_articles_path, scope: :search, method: :get) do |f| %>
+      
+        <div class="mb-3">
+          <%= f.label :keyword, "フリーワード検索" %>
+          <%= f.text_field :keyword, value: @keyword, class: "form-control" %>
+        </div>
+
+        <div class="mb-3">
+          <% @grades.each do |grade| %>
+            <%= f.check_box :grade_ids, { multiple: true, include_hidden: false, class: "btn-check", id: "search_grade_ids_#{grade.id}" }, grade.id %>
+            <%= f.label :grade_ids, grade.name, value: grade.id, class: "btn btn-outline-secondary mb-1 w-100" %>
+          <% end %>
+        </div>
+
+        
+        <div class="mb-3 d-flex gap-1">
+          <%= link_to "クリア", root_path, class: "btn btn-secondary w-50" %>
+          <%= f.submit "検索する", class: "btn btn-primary w-50" %>
+        </div>
+        
+      <% end %>
+    </div>
   </aside>
-  <main class="col-sm-8">
+  <main class="col-md-8">
     
     <h4 class="border-bottom border-dark border-2 mb-3">記事一覧</h4>
 
     <% if @articles.any? %>
+      <p><%= @articles.count %> 件</p>
+      
       <% @articles.each do |article| %>
         <%= link_to article_path(article), class: "text-decoration-none text-dark" do %>
           <div class="card mb-1" >
@@ -39,6 +65,8 @@
         <% end %>  
       <% end %>
       <%== pagy_bootstrap_nav(@pagy) %>
+    <% else %>
+      <p>条件に該当する記事が見つかりません。</p>
     <% end %>
   </main>
 </div>

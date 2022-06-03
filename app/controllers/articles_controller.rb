@@ -2,9 +2,10 @@ class ArticlesController < ApplicationController
   before_action :require_user_logged_in
   before_action :user_teacher, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_article, only: [:edit, :update, :destroy]
-  before_action :set_grades, only: [:new, :edit]
+  before_action :set_grades, only: [:new, :edit, :search]
   
   def index
+    @grades = Grade.all
     @pagy, @articles = pagy(Article.order(id: :desc), item: 10)
   end
   
@@ -18,8 +19,7 @@ class ArticlesController < ApplicationController
 
   def create
     @article = current_user.articles.build(article_params)
-    @grades = Grade.all
-    
+
     if @article.save
       flash[:success] = "記事を投稿しました。"
       redirect_to root_path
@@ -51,6 +51,31 @@ class ArticlesController < ApplicationController
     redirect_to root_path
   end
   
+  def search
+    
+    @keyword = params[:search][:keyword]
+    @grade_id = params[:search][:grade_ids]
+
+    if @keyword.present?
+      @articles = Article.search_by_keyword(@keyword)
+      
+      if @grade_id.present?
+        @pagy, @articles = pagy(@articles.search_by_grade(@grade_id).order(id: :desc), item: 10)
+      else
+        @pagy, @articles = pagy(@articles.order(id: :desc), item: 10)
+      end
+    
+    elsif @grade_id.present?
+      @pagy, @articles = pagy(Article.search_by_grade(@grade_id).order(id: :desc), item: 10)
+    
+    else
+      @articles = Article.none
+    
+    end
+    
+    render :index
+  end 
+  
   private
   
   def set_article
@@ -64,4 +89,5 @@ class ArticlesController < ApplicationController
   def article_params
     params.require(:article).permit(:title, :content, :grade_id)
   end
+ 
 end
