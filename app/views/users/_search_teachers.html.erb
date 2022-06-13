@@ -1,5 +1,5 @@
 <div class="mb-3">
-  <%= form_with(url: search_users_path, scope: :search, method: :get) do |f| %>
+  <%= form_with(url: search_teachers_users_path, scope: :search, method: :get) do |f| %>
   
     <div class="mb-3">
       <%= f.label :name, "名前検索" %>
@@ -15,7 +15,7 @@
 
     
     <div class="mb-3 d-flex gap-1">
-      <%= link_to "クリア", users_path, class: "btn btn-secondary w-50" %>
+      <%= link_to "クリア", teachers_users_path, class: "btn btn-secondary w-50" %>
       <%= f.submit "検索する", class: "btn btn-primary w-50" %>
     </div>
     

@@ -1,11 +1,11 @@
 class UsersController < ApplicationController
   before_action :require_user_logged_in
   before_action :user_teacher, only: [:index, :new, :create, :edit, :update, :destroy]
-  before_action :set_grades, only: [:index, :new, :edit, :search, :teachers]
+  before_action :set_grades, only: [:index, :new, :edit, :teachers, :search, :search_teachers]
   before_action :set_user, only: [:edit, :update, :destroy]
   
   def index
-    @pagy, @users = pagy(User.where(teacher: false), items: 10)
+    @pagy, @users = pagy(User.where(teacher: false).order(id: :desc), items: 10)
   end
 
   def new
@@ -46,47 +46,54 @@ class UsersController < ApplicationController
     redirect_back(fallback_location: root_path)
   end
   
+  def teachers
+    @pagy, @users = pagy(User.where(teacher: true).order(id: :desc), items: 10)
+  end
+  
   def search
-    if URI(request.referer).path == "/users/teachers"
-      @users = User.where(teacher: true)
-    else
-      @users = User.where(teacher: false)
-    end
-     
+    users = User.where(teacher: false)
+
     @name = params[:search][:name]
     @grade_id = params[:search][:grade_ids]
 
     if @name.present?
-      @users = @users.search_by_name(@name)
-      
-      if @grade_id.present?
-        @pagy, @users = pagy(@users.search_by_grade(@grade_id).order(id: :desc), item: 10)
-      else
-        @pagy, @users = pagy(@users.order(id: :desc), item: 10)
-      end
-    
-    elsif @grade_id.present?
-      @pagy, @users = pagy(@users.search_by_grade(@grade_id).order(id: :desc), item: 10)
-    
-    else
-      @users = User.none
+      users = users.search_by_name(@name)
     end
     
-    if URI(request.referer).path == "/users/teachers"
-      render :teachers
-    else
-      render :index
+    if @grade_id.present?
+      users = users.search_by_grade(@grade_id)
     end
+    
+    @pagy, @users = pagy(users.order(id: :desc), item: 10)
+    render :index
   end 
   
-  def teachers
-    @pagy, @users = pagy(User.where(teacher: true).order(id: :desc), items: 10)
+  def search_teachers
+    users = User.where(teacher: true)
+   
+    @name = params[:search][:name]
+    @grade_id = params[:search][:grade_ids]
+
+    if @name.present?
+      users = users.search_by_name(@name)
+    end
+    
+    if @grade_id.present?
+      users = users.search_by_grade(@grade_id)
+    end
+    
+    @pagy, @users = pagy(users.order(id: :desc), item: 10)
+    render :teachers
   end
 
   private
   
   def set_grades
-    @grades = Grade.all
+    if action_name == "index" || action_name == "search"
+      @grades = Grade.where.not(id: 1)
+    else
+      @grades = Grade.all
+    end
   end
   
   def set_user
