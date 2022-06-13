@@ -19,23 +19,24 @@
     <%= f.text_area :content, class: "form-control", rows: 3 %>
   </div>
 
-<%
-=begin  %>
-<div class="mb-3">
-    <%= f.label :image, "写真" %>
-    <%= f.file_field :image, class: "form-control" %>
-    <%= image_tag user.image.url if user.image? %>
-  
-    <div class="form-check">  
-      <% if user.image? %>
-        <%= f.check_box :remove_image, class: "form-check-input" %>
-        <%= f.label :remove_image, "画像を削除する", class: "form-check-label" %>
+  <div class="row">
+    <% if article.article_images.present? %>
+      <label>写真</label>
+      <% article.article_images.each do |image| %>
+        <div class="col-sm-4 mb-3">
+          <div class="mb-1">
+            <%= image_tag image.image.url, class: "img-fluid" %>
+          </div>
+          <%= link_to "削除", article_image_path(image.id), method: :delete, data: { confirm: "写真を削除しますか"}, class: "btn btn-sm btn-outline-danger w-100" %>
+        </div>
       <% end %>
-    </div>
-    
+    <% end %>
   </div>
-<%
-=end %>
-  
+
+  <div class="mb-3">
+    <%= f.label :image, "写真の追加" %>
+    <%= f.file_field :image, multiple: true, name: "article_images[image][]", class: "form-control" %>
+  </div>
+
   <%= f.submit "記事を投稿する", class: "btn btn-primary w-100" %>
 <% end %>

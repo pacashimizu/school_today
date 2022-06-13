@@ -16,7 +16,7 @@
 
         <div class="mb-3">
           <% @grades.each do |grade| %>
-            <%= f.check_box :grade_ids, { multiple: true, include_hidden: false, class: "btn-check", id: "search_grade_ids_#{grade.id}" }, grade.id %>
+            <%= f.check_box :grade_ids, { multiple: true, include_hidden: false, class: "btn-check", id: "search_grade_ids_#{grade.id}", checked: searched_by_grade?(grade.id) }, grade.id %>
             <%= f.label :grade_ids, grade.name, value: grade.id, class: "btn btn-outline-secondary mb-1 w-100" %>
           <% end %>
         </div>
@@ -39,16 +39,12 @@
       
       <% @articles.each do |article| %>
         <%= link_to article_path(article), class: "text-decoration-none text-dark" do %>
-          <div class="card mb-1" >
+          <div class="card mb-1 shadow-sm" >
             <div class="row g-0">
               <div class="col-4">
-<%
-=begin %>
-            <% if user.image? %>
-              <%= image_tag user.image.url, size: "100x100", class: "card-img" %>
-            <% end %>
-<%
-=end %>
+                <% if article.article_images.present? %>
+                  <%= image_tag article.article_images.first.image.url, class: "card-img p-1" %>
+                <% end %>
               </div>
               <div class="col-8">
                 <div class= "card-body d-flex">

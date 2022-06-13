@@ -12,11 +12,14 @@ Rails.application.routes.draw do
       get :search
     end
   end
+  
+  resources :article_images, only: [:destroy]
   resources :grades, only: [:index]
   resources :users, only: [:index, :create, :edit, :update, :destroy] do
     collection do
       get :teachers
       get :search
+      get :search_teachers
     end
   end
 

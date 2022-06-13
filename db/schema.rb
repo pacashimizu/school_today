@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_01_053448) do
+ActiveRecord::Schema.define(version: 2022_06_05_131317) do
+
+  create_table "article_images", charset: "utf8mb4", force: :cascade do |t|
+    t.string "image"
+    t.bigint "article_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["article_id"], name: "index_article_images_on_article_id"
+  end
 
   create_table "articles", charset: "utf8mb4", force: :cascade do |t|
     t.string "title"
@@ -42,6 +50,7 @@ ActiveRecord::Schema.define(version: 2022_06_01_053448) do
     t.index ["grade_id"], name: "index_users_on_grade_id"
   end
 
+  add_foreign_key "article_images", "articles"
   add_foreign_key "articles", "grades"
   add_foreign_key "articles", "users"
   add_foreign_key "users", "grades"

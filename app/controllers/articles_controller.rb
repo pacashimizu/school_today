@@ -2,10 +2,10 @@ class ArticlesController < ApplicationController
   before_action :require_user_logged_in
   before_action :user_teacher, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_article, only: [:edit, :update, :destroy]
-  before_action :set_grades, only: [:new, :edit, :search]
+  before_action :set_grades, only: [:index, :new, :create, :edit, :update, :search]
   
   def index
-    @grades = Grade.all
+
     @pagy, @articles = pagy(Article.order(id: :desc), item: 10)
   end
   
@@ -19,10 +19,11 @@ class ArticlesController < ApplicationController
 
   def create
     @article = current_user.articles.build(article_params)
-
     if @article.save
+      @article.save_images(params) if params[:article_images]
       flash[:success] = "記事を投稿しました。"
-      redirect_to root_path
+      redirect_to @article
+
     else
       flash.now[:danger] = "記事の投稿に失敗しました。"
       render :new
@@ -34,13 +35,15 @@ class ArticlesController < ApplicationController
   end
 
   def update
+    @article.save_images(params) if params[:article_images]
 
     if @article.update(article_params)
       flash[:success] = "記事を更新しました。"
-      redirect_to root_path
+      redirect_to @article
+    
     else
       flash.now[:danger] = "記事の更新に失敗しました。"
-      render :new
+      render :edit
     end
   end
 
@@ -55,29 +58,24 @@ class ArticlesController < ApplicationController
     
     @keyword = params[:search][:keyword]
     @grade_id = params[:search][:grade_ids]
+    
+    articles = Article.all
 
     if @keyword.present?
-      @articles = Article.search_by_keyword(@keyword)
-      
-      if @grade_id.present?
-        @pagy, @articles = pagy(@articles.search_by_grade(@grade_id).order(id: :desc), item: 10)
-      else
-        @pagy, @articles = pagy(@articles.order(id: :desc), item: 10)
-      end
-    
-    elsif @grade_id.present?
-      @pagy, @articles = pagy(Article.search_by_grade(@grade_id).order(id: :desc), item: 10)
-    
-    else
-      @articles = Article.none
-    
+      articles = articles.search_by_keyword(@keyword)
     end
     
+    if @grade_id.present?
+      articles = articles.search_by_grade(@grade_id)
+    end
+    
+    @pagy, @articles = pagy(articles.order(id: :desc), item: 10)
+    
     render :index
-  end 
+  end
   
   private
-  
+ 
   def set_article
     @article = Article.find(params[:id])
   end
