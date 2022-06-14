@@ -14,7 +14,12 @@ Rails.application.routes.draw do
   end
   
   resources :article_images, only: [:destroy]
-  resources :grades, only: [:index]
+  resources :grades, only: [:index] do
+    collection do
+      get :promotion
+    end
+  end
+    
   resources :users, only: [:index, :create, :edit, :update, :destroy] do
     collection do
       get :teachers

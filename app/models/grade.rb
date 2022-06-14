@@ -4,4 +4,8 @@ class Grade < ApplicationRecord
   has_many :users
   has_many :articles
   
+  def students
+    users.where(teacher: false)
+  end
+    
 end

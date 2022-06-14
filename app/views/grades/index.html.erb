@@ -2,23 +2,28 @@
   <div class="col-md-8 offset-md-2">
     <h4 class="border-bottom border-dark border-2 mb-3">クラス一覧</h4>
     
-    <table class="table table-striped text-center mb-3">
-      <thead class="table-dark">
+    <table class="table text-center mb-3">
+      <thead class="table-light">
         <tr>
-          <th>並び順</th>
+          <th>No.</th>
           <th>クラス名</th>
+          <th>記事数</th>
           <th>園児数</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-        <% @grades.each do |grade| %>
+        <% @grades.each_with_index do |grade, i| %>
          <tr>
-           <td><%= grade.id %></td>
+           <td><%= i+1 %></td>
            <td><%= grade.name %></td>
-           <td><%= grade.users.where(teacher: false).count %></td>
+           <td><%= grade.articles.count %></td>
+           <td><%= grade.students.count %></td>
+           <td><%= link_to "記事一覧", search_articles_path(search: {grade_ids: grade.id}), class: "btn btn-info btn-sm" %>
+               <%= link_to "園児一覧", search_users_path(search: {grade_ids: grade.id}), class: "btn btn-info btn-sm" %></td>
          </tr>
         <% end %>
       </tbody>
     </table>
     
-    <%= link_to "進級処理", 
+    <%= link_to "進級", promotion_grades_path, data: { confirm: "進級処理を実行しますか？"}, class: "btn btn-outline-danger" %> 
