@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :require_user_logged_in
   before_action :user_teacher, only: [:index, :new, :create, :edit, :update, :destroy]
-  before_action :set_grades, only: [:index, :new, :edit, :teachers, :search, :search_teachers]
+  before_action :set_grades, only: [:index, :new, :create, :edit, :update, :teachers, :search, :search_teachers]
   before_action :set_user, only: [:edit, :update, :destroy]
   
   def index
@@ -17,7 +17,11 @@ class UsersController < ApplicationController
 
     if @user.save
       flash[:success] = "ユーザを登録しました。"
-      redirect_to users_url
+      if @user.teacher?
+        redirect_to teachers_users_url
+      else
+        redirect_to users_url
+      end
     else
       flash.now[:danger] = "ユーザの登録に失敗しました。"
       render :new
@@ -32,7 +36,11 @@ class UsersController < ApplicationController
 
     if @user.update(user_params)
       flash[:success] = "ユーザを更新しました。"
-      redirect_to users_url
+      if @user.teacher?
+        redirect_to teachers_users_url
+      else
+        redirect_to users_url
+      end
     else
       flash.now[:danger] = "ユーザの更新に失敗しました。"
       render :edit
