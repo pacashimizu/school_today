@@ -3,6 +3,7 @@ class ArticlesController < ApplicationController
   before_action :user_teacher, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_article, only: [:edit, :update, :destroy]
   before_action :set_grades, only: [:index, :new, :create, :edit, :update, :search]
+  before_action :correct_user, only: [:edit, :update, :destroy]
   
   def index
 
@@ -86,6 +87,13 @@ class ArticlesController < ApplicationController
   
   def article_params
     params.require(:article).permit(:title, :content, :grade_id)
+  end
+  
+  def correct_user
+    @article = current_user.articles.find_by(id: params[:id])
+    unless @article
+      redirect_to root_url
+    end
   end
  
 end
