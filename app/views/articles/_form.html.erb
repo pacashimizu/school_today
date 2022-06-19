@@ -5,7 +5,7 @@
     <div>クラス</div>
     <% grades.each do |grade| %>
       <%= f.radio_button :grade_id, grade[:id], class: "btn-check", autocomplete: "off" %>
-      <%= f.label :grade_id, grade.name, value: grade[:id], class: "btn btn-outline-primary" %>
+      <%= f.label :grade_id, grade.name, value: grade[:id], class: "btn btn-outline-secondary" %>
     <% end %>
   </div>
 
@@ -23,20 +23,22 @@
     <% if article.article_images.present? %>
       <label>写真</label>
       <% article.article_images.each do |image| %>
-        <div class="col-sm-4 mb-3">
+        <div class="col-md-4 mb-3">
           <div class="mb-1">
-            <%= image_tag image.image.url, class: "img-fluid" %>
+            <%= image_tag image.image.url, class: "upload-img" %>
           </div>
-          <%= link_to "削除", article_image_path(image.id), method: :delete, data: { confirm: "写真を削除しますか"}, class: "btn btn-sm btn-outline-danger w-100" %>
+          <div class="text-center">
+            <%= link_to "削除", article_image_path(image.id), method: :delete, data: { confirm: "写真を削除しますか"}, class: "btn btn-sm btn-outline-danger" %>
+          </div>
         </div>
       <% end %>
     <% end %>
   </div>
 
   <div class="mb-3">
-    <%= f.label :image, "写真の追加" %>
+    <%= f.label :image, "写真のアップロード" %>
     <%= f.file_field :image, multiple: true, name: "article_images[image][]", class: "form-control" %>
   </div>
 
-  <%= f.submit "記事を投稿する", class: "btn btn-primary w-100" %>
+  <%= f.submit "記事を投稿する", class: "btn btn-primary" %>
 <% end %>

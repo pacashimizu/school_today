@@ -1,6 +1,6 @@
-<div class="row">
+<div class="row py-4">
   <div class="col-md-8 offset-md-2">
-    <h4 class="border-bottom border-dark border-2 mb-3">クラス一覧</h4>
+    <h4 class="border-start border-success border-5 p-2 mb-3">クラス一覧</h4>
     
     <table class="table text-center mb-3">
       <thead class="table-light">
@@ -19,11 +19,14 @@
            <td><%= grade.name %></td>
            <td><%= grade.articles.count %></td>
            <td><%= grade.students.count %></td>
-           <td><%= link_to "記事一覧", search_articles_path(search: {grade_ids: grade.id}), class: "btn btn-info btn-sm" %>
-               <%= link_to "園児一覧", search_users_path(search: {grade_ids: grade.id}), class: "btn btn-info btn-sm" %></td>
+           <td><%= link_to "記事一覧", search_articles_path(search: {grade_ids: grade.id}), class: "btn btn-secondary btn-sm" %>
+               <%= link_to "園児一覧", search_users_path(search: {grade_ids: grade.id}), class: "btn btn-secondary btn-sm" %></td>
          </tr>
         <% end %>
       </tbody>
     </table>
-    
-    <%= link_to "進級", promotion_grades_path, data: { confirm: "進級処理を実行しますか？"}, class: "btn btn-outline-danger" %> 
+    <div class="text-end">
+      <%= link_to "進級", promotion_grades_path, data: { confirm: "進級処理を実行しますか？"}, class: "btn btn-outline-danger" %> 
+    </div>
+  </div>
+</div>

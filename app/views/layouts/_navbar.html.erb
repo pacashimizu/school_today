@@ -1,36 +1,49 @@
-<header class="mb-4">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/">桜ヶ丘こども園 Dayily News</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="MENU">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top mb-1">
+  <div class="container">
+    <!-- ブランド -->
+    <a class="navbar-brand" href="/">さくら保育園 Daily News</a>
+    <!-- 切り替えボタン -->
+    <% if logged_in? %>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      
+      <!-- ナビゲーション -->
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <% if logged_in? %>
+          <!-- 教員のナビゲーション -->
           <% if current_user.teacher? %>
-            <ul class="navbar-nav me-auto">
-              <li class="nav-item"><a href="/" class="nav-link <%= "active" if current_page?(root_path) %>">News</a></li>
-              <li class="nav-item"><a href="/users" class="nav-link <%= "active" if current_page?(users_path) %>">園児一覧</a></li>
-              <li class="nav-item"><a href="/users/teachers" class="nav-link <%= "active" if current_page?(teachers_users_path) %>">教員一覧</a></li>
-              <li class="nav-item"><a href="/grades" class="nav-link">クラス一覧</a></li>
+            <ul class="navbar-nav ms-auto gap-1">
+              <li class="nav-item"><%= link_to "新しい記事を書く", new_article_path, class: "nav-link btn btn-primary text-light" %></li>
+              <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle btn btn-outline-secondary text-light" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <%= current_user.name %> さん  
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <%= link_to "園児一覧", users_path, class: "dropdown-item" %>
+                  <%= link_to "教員一覧", teachers_users_path, class: "dropdown-item" %>
+                  <%= link_to "クラス一覧", grades_path, class: "dropdown-item" %>
+                  <div class="dropdown-divider"></div>
+                  <%= link_to "ユーザの新規登録", signup_path, class: "dropdown-item" %>
+                  <div class="dropdown-divider"></div>
+                  <%= link_to "ログアウト", logout_path, method: :delete, class: "dropdown-item" %>
+                </div>
+              </li>
             </ul>
-            <ul class="navbar-nav">
-              <li class="nav-item"><%= link_to "ログアウト", logout_path, method: :delete, class: "nav-link btn btn-info text-dark" %></li>
-            </ul>
-
+          <!-- 園児のナビゲーション -->
           <% else %>
-            <ul class="navbar-nav me-auto">
-              <li class="nav-item"><a href="/" class="nav-link <%= "active" if current_page?(root_path) %>">News</a></li>
-              <li class="nav-item"><a href="/users/teachers" class="nav-link <%= "active" if current_page?(teachers_users_path) %>">教員一覧</a></li>
-            </ul>
-            <ul class="navbar-nav">
-              <li class="nav-item"><%= link_to "ログアウト", logout_path, method: :delete, class: "nav-link btn btn-info text-dark" %></li>
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle btn btn-outline-secondary text-light" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <%= current_user.name %> さん  
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <%= link_to "教員一覧", teachers_users_path, class: "dropdown-item" %>
+                  <div class="dropdown-divider"></div>
+                  <%= link_to "ログアウト", logout_path, method: :delete, class: "dropdown-item" %>
+                </div>
+              </li>
             </ul>
           <% end %>
-        <% end %>  
-        
       </div>
-    </div>
-  </nav>
-</header>
+    <% end %>
+  </div>
+</nav>

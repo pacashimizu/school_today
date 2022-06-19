@@ -1,28 +1,30 @@
-<div class="text-center">
-  <h1>桜ヶ丘こども園 Daily News</h1>
-  <h3>Log in</h3>
-</div>
-
-<div class="row">
-  <div class="col-md-6 offset-md-3">
-    
-    <div class="mb-3">
-      <%= form_with(url: login_path, scope: :session) do |f|%>
+<div class="py-4">
+  <div class="text-center mb-3">
+    <h1>さくら保育園 Daily News</h1>
+    <h3>ログイン</h3>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
       
-        <div class="mb-3">
-          <%= f.label :login_id, "ログインID" %>
-          <%= f.text_field :login_id, class: "form-control" %>
-        </div>
+      <div class="mb-3">
+        <%= form_with(url: login_path, scope: :session) do |f|%>
         
-        <div class="mb-3">
-          <%= f.label :password, "パスワード" %>
-          <%= f.password_field :password, class: "form-control" %>
-        </div>
-        
-        <%= f.submit "ログインする", class: "btn btn-primary w-100" %>
-      <% end %>
+          <div class="mb-3">
+            <%= f.label :login_id, "ログインID" %>
+            <%= f.text_field :login_id, class: "form-control" %>
+          </div>
+          
+          <div class="mb-3">
+            <%= f.label :password, "パスワード" %>
+            <%= f.password_field :password, class: "form-control" %>
+          </div>
+          
+          <%= f.submit "ログインする", class: "btn btn-primary w-100" %>
+        <% end %>
+      </div>
+      
+      <p><u>ログインID・パスワードが不明な方は、クラス担任までご確認ください。</u></p>
     </div>
-    
-    <p><u>ログインID・パスワードが不明な方は、クラス担任までご確認ください。</u></p>
   </div>
 </div>

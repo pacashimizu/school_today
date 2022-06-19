@@ -1,0 +1,24 @@
+<div class="container text-center">
+  <% if logged_in? %>
+    <!-- ナビゲーション -->
+    <ul class="nav justify-content-center mb-3">
+      <% if current_user.teacher? %>
+        <li class="nav-item"><a href="/" class="nav-link">News</a></li>
+        <li class="nav-item"><a href="/users" class="nav-link">園児一覧</a></li>
+        <li class="nav-item"><a href="/users/teachers" class="nav-link">教員一覧</a></li>
+        <li class="nav-item"><a href="/grades" class="nav-link">クラス一覧</a></li>
+      <% else %>
+        <li class="nav-item"><a href="/" class="nav-link">News</a></li>
+        <li class="nav-item"><a href="/users/teachers" class="nav-link">教員一覧</a></li>
+      <% end %>
+    </ul>
+    
+    <p>
+      <small>Copyright &copy;2022 さくら保育園, All Rights Reserved.</small>
+    </p>
+  <% else %>
+    <p>
+      <small>Copyright &copy;2022 さくら保育園, All Rights Reserved.</small>
+    </p>
+  <% end %>
+</div>

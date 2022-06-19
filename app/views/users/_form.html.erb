@@ -12,7 +12,7 @@
     <div>クラス</div>
     <% @grades.each do |grade| %>
       <%= f.radio_button :grade_id, grade[:id], class: "btn-check", autocomplete: "off" %>
-      <%= f.label :grade_id, grade.name, value: grade[:id], class: "btn btn-outline-primary" %>
+      <%= f.label :grade_id, grade.name, value: grade[:id], class: "btn btn-outline-secondary" %>
     <% end %>
   </div>
 
@@ -37,16 +37,17 @@
   </div>
   
   <div class="mb-3">
-    <%= f.label :comment, "コメント" %><span class="badge bg-warning text-dark">教員のみ</span>
+    <%= f.label :comment, "コメント（教員のみ）" %>
     <%= f.text_area :comment, class: "form-control", rows: 3 %>
   </div>
   
   <div class="mb-3">
     <%= f.label :image, "顔写真" %>
-    <%= f.file_field :image, class: "form-control" %>
-    <%= image_tag user.image.url if user.image? %>
-  
-    <div class="form-check">  
+    <%= f.file_field :image, class: "form-control mb-1" %>
+    <% if user.image? %>
+      <%= image_tag user.image.url, class: "img-thumbnail" %>
+    <% end %>
+    <div class="form-check form-switch">  
       <% if user.image? %>
         <%= f.check_box :remove_image, class: "form-check-input" %>
         <%= f.label :remove_image, "画像を削除する", class: "form-check-label" %>
@@ -55,5 +56,5 @@
     
   </div>
   
-  <%= f.submit "ユーザを登録する", class: "btn btn-primary w-100" %>
+  <%= f.submit "ユーザを登録する", class: "btn btn-primary" %>
 <% end %>

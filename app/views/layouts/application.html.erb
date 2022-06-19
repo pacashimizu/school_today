@@ -14,12 +14,23 @@
   </head>
 
   <body data-turbolinks="false">
-    <%= render "layouts/navbar" %>
+  
+  <header>
+    <div class="container text-center">
+      <h1><%= link_to image_tag("text_hoiikuen.png", height: "50", class: "mw-100", alt: "保育園"), "/" %></h1>
+    </div>
+  </header>
     
+    <%= render "layouts/navbar" %>
+    <%= render "layouts/flash_messages" %>
+
     <div class="container">
-      <%= render "layouts/flash_messages" %>
-      
       <%= yield %>
     </div>
+    
+  <footer class="py-4 bg-dark text-light">
+    <%= render "layouts/footer" %>
+  </footer>
+
   </body>
 </html>

@@ -1,48 +1,47 @@
-<div class="row mb-3">
-  <div class="d-flex gap-1 justify-content-end">
-    <% if current_user.teacher? %>
-      <%= link_to "この記事を編集する", edit_article_path, class: "btn btn-outline-secondary" %>
-      <%= link_to "この記事を削除する", @article, method: :delete, data: { confirm: "記事を削除してよいですか？" }, class: "btn btn-danger" %>
-    <% end %>
-  </div>
-</div>
 
 <div class="row mb-3">
   <div class="col-md-5 py-3">
       <% if @article.article_images.present? %>
-        <%= image_tag @article.article_images.first.image.url, class: "img-fluid shadow" %>
+        <%= image_tag @article.article_images.first.image.url, class: "main-img shadow-sm" %>
       <% end %>
   </div>
   
   <div class="col-md-7 py-3">
-    <p class="mb-1"><span class="badge bg-info text-dark rounded-pill"><%= @article.grade.name %></span></p>
+    <p class="mb-1"><span class="badge bg-success rounded-pill"><%= @article.grade.name %></span></p>
     <h4><%= @article.title %></h4>
     <p class="mb-1"><small><%= @article.created_at.strftime("%Y-%m-%d %H:%M") %></small></p>
     <p><%= @article.content %></p>
-    
-    <div class="row py-3 bg-light align-items-center">
-      <div class="col-4">
-        <% if @article.user.image? %>
-          <%= image_tag @article.user.image.url, class: "img-thumbnail" %>
+  
+    <div class="row mb-3">
+      <div class="d-flex gap-1">
+        <% if current_user == @article.user %>
+          <%= link_to "この記事を編集する", edit_article_path, class: "btn btn-outline-secondary" %>
+          <%= link_to "この記事を削除する", @article, method: :delete, data: { confirm: "記事を削除してよいですか？" }, class: "btn btn-danger" %>
         <% end %>
-      </div>
-      <div class="col-8">
-        <h5><%= @article.user.name %></h5>
-        <p class="mb-1"><%= @article.user.comment %></p>
       </div>
     </div>
   </div>
-</div>
 
-  <h4 class="border-start border-success border-5 ps-3 mb-3">ギャラリー</h4>
-  
-  <div class="row">
-      <% if @article.article_images.present? %>
-        <% @article.article_images.each do |image| %>
-          <div class="col-sm-4">
-            <%= image_tag image.image.url, class: "img-fluid" %>
-          </div>
-        <% end %>
+  <div class="row py-3">
+    <h4 class="border-start border-success border-5 p-2 mb-3">ギャラリー</h4>
+    <% if @article.article_images.present? %>
+      <% @article.article_images.each do |image| %>
+        <div class="col-md-4 mb-1">
+          <%= image_tag image.image.url, class: "gallery" %>
+        </div>
       <% end %>
+    <% end %>
+  </div>
+
+  <div class="row py-3 bg-light align-items-center">
+    <div class="col-sm-4 col-md-2">
+      <% if @article.user.image? %>
+        <%= image_tag @article.user.image.url, class: "img-thumbnail" %>
+      <% end %>
+    </div>
+    <div class="col">
+      <h5><%= @article.user.name %></h5>
+      <p><%= @article.user.comment %></p>
+    </div>
   </div>
 </div>

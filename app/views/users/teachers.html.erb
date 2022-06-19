@@ -1,14 +1,12 @@
 <div class="row">
-  <aside class="col-sm-4">
-    <%= render "search_teachers", name: @name, grades: @grades %>
+  <aside class="col-md-4 py-4 mb-1 bg-light order-sm-2 order-md-1">
+    <div class="sidebar-item">
+      <%= render "search_teachers", name: @name, grades: @grades %>
+    </div>
   </aside>
-  <main class="col-sm-8">
-    
-    <%= render "create_user_button" %>
-    
+  <main class="col-md-8 py-4 order-sm-1 order-md-2">
     <div>
-      <h4 class="border-bottom border-dark border-2 mb-3">教員一覧</h4>
-  
+      <h4 class="border-start border-success border-5 p-2 mb-3">教員一覧</h4>
       <%= render "users", users: @users %>
     </div>
   </main>

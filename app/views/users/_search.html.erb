@@ -1,3 +1,5 @@
+<h4 class="mb-3 border-start border-5 border-dark p-2">検索・絞り込み</h4>
+
 <div class="mb-3">
   <%= form_with(url: search_users_path, scope: :search, method: :get) do |f| %>
   
@@ -7,6 +9,7 @@
     </div>
 
     <div class="mb-3">
+      <label>クラスによる絞り込み</label>
       <% grades.each do |grade| %>
         <%= f.check_box :grade_ids, { multiple: true, include_hidden: false, class: "btn-check", id: "search_grade_ids_#{grade.id}", checked: searched_by_grade?(grade.id) }, grade.id %>
         <%= f.label :grade_ids, grade.name, value: grade.id, class: "btn btn-outline-secondary mb-1 w-100" %>
