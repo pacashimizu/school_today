@@ -18,7 +18,7 @@ class Article < ApplicationRecord
   end
   
   def self.search_by_keyword(keyword)
-    where(["title LIKE? OR content LIKE?", "%#{keyword}%", "%#{keyword}%"]) 
+    joins(:user).where(["title LIKE? OR content LIKE? OR users.name LIKE?", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%"]) 
   end
   
   def self.search_by_grade(grade_ids)
